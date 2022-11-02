@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <script type="module" src="/app.js" defer></script>
+  </head>
+  <body>
+    <h1>DKB to YNAB CSV</h1>
+    <p>This simple app converts exported transactions from DKB to the format accepted for YNAB CSV import.</p>
+    <p>It also tries to parse the transaction date from the note (Verwendungszweck) for Credit card / EC transactions transactions.</p>
+    <p><b>Your sensitive data doesn't leave your computer, everything is done in the browser.</b></p>
+    
+    <h2>Convert</h2>
+    <p>Select a DKB CSV file to start: <input type="file" id="file-input" /></p>
+  </body>
+</html>
