@@ -41,7 +41,7 @@ function generateYnabCsv(fileContents) {
     return {
       Date: actualTransactionDate,
       Payee: record["Auftraggeber / Begünstigter"],
-      Memo: record["Verwendungszweck"],
+      Memo: `${record["Verwendungszweck"]} / ${record["Auftraggeber / Begünstigter"]}`,
       Amount: record["Betrag (EUR)"],
     };
   });
