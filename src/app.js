@@ -16,7 +16,7 @@ fileInputElement.addEventListener("change", () => {
 function generateYnabCsv(fileContents) {
   // Parse csv, omitting the first 6 lines which are not CSV
   const dkbTransactions = parse(fileContents, {
-    from_line: 5,
+    from_line: 7,
     delimiter: ";",
     columns: true,
     skip_empty_lines: true,
