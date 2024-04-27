@@ -3,15 +3,31 @@ import { stringify } from "csv-stringify/browser/esm/sync";
 import { format, isValid, parse as parseDate } from "date-fns";
 
 const fileInputElement = document.querySelector("#file-input");
+const dropzone = document.querySelector("#dropzone");
+
+dropzone.addEventListener("drop", (e) => {
+  e.preventDefault();
+
+  [...(e.dataTransfer.items ?? [])]
+    .filter((f) => f.kind === "file")
+    .map((f) => f.getAsFile())
+    .forEach((f) => readFile(f, (content) => generateYnabCsv(content)));
+});
+
+dropzone.addEventListener("dragover", (e) => e.preventDefault());
 
 fileInputElement.addEventListener("change", () => {
   const file = fileInputElement.files[0];
 
+  readFile(file, (content) => generateYnabCsv(content));
+});
+
+function readFile(file, cb) {
   const reader = new FileReader();
 
-  reader.addEventListener("load", () => generateYnabCsv(reader.result));
+  reader.addEventListener("load", () => cb(reader.result));
   reader.readAsText(file, "windows-1252");
-});
+}
 
 function generateYnabCsv(fileContents) {
   // Parse csv, omitting the first 6 lines which are not CSV

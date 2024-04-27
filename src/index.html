@@ -7,12 +7,28 @@
     <script type="module" src="app.js" defer></script>
   </head>
   <body>
-    <h1>DKB to YNAB CSV</h1>
-    <p>This simple app converts exported transactions from DKB to the format accepted by YNAB CSV import.</p>
-    <p>It also tries to parse the transaction date from the note (Verwendungszweck) for Credit card / EC transactions.</p>
-    <p><b>Your sensitive data doesn't leave your computer, everything is done in the browser.</b></p>
-    
-    <h2>Convert</h2>
-    <p>Select a DKB CSV file to start: <input type="file" id="file-input" /></p>
+    <article id="dropzone">
+      <h1>DKB to YNAB CSV</h1>
+      <p>
+        This simple app converts exported transactions from DKB to the format
+        accepted by YNAB CSV import.
+      </p>
+      <p>
+        It also tries to parse the transaction date from the note
+        (Verwendungszweck) for Credit card / EC transactions.
+      </p>
+      <p>
+        <b
+          >Your sensitive data doesn't leave your computer, everything is done
+          in the browser.</b
+        >
+      </p>
+
+      <h2>Convert</h2>
+      <p>
+        Select a DKB CSV file to start: <input type="file" id="file-input" />
+      </p>
+      <p>... or drag a file anywhere above this paragraph.</p>
+    </article>
   </body>
 </html>
