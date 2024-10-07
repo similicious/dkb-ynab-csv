@@ -43,7 +43,7 @@ function generateYnabCsv(fileContents) {
     let transactionDate = parseDate(
       record.Wertstellung,
       "dd.MM.yy",
-      new Date()
+      new Date(),
     );
 
     return {
@@ -63,7 +63,7 @@ function generateYnabCsv(fileContents) {
   // Download result file to disk
   download(
     `ynab_data_${format(new Date(), "yyyyMMddHHmm")}.csv`,
-    ynabTransactionsCsv
+    ynabTransactionsCsv,
   );
 
   fileInputElement.value = null;
@@ -73,7 +73,7 @@ function download(filename, text) {
   var element = document.createElement("a");
   element.setAttribute(
     "href",
-    "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+    "data:text/plain;charset=utf-8," + encodeURIComponent(text),
   );
   element.setAttribute("download", filename);
 
