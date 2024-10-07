@@ -1,6 +1,6 @@
 import { parse } from "csv-parse/browser/esm/sync";
 import { stringify } from "csv-stringify/browser/esm/sync";
-import { format, isValid, parse as parseDate } from "date-fns";
+import { format, format as formatDate, parse as parseDate } from "date-fns";
 
 const fileInputElement = document.querySelector("#file-input");
 const dropzone = document.querySelector("#dropzone");
@@ -26,39 +26,31 @@ function readFile(file, cb) {
   const reader = new FileReader();
 
   reader.addEventListener("load", () => cb(reader.result));
-  reader.readAsText(file, "windows-1252");
+  reader.readAsText(file, "");
 }
 
 function generateYnabCsv(fileContents) {
   // Parse csv, omitting the first 6 lines which are not CSV
   const dkbTransactions = parse(fileContents, {
-    from_line: 7,
-    delimiter: ";",
+    from_line: 5,
+    delimiter: ",",
     columns: true,
     skip_empty_lines: true,
   });
 
   // Transform all transactions to the YNAB format
   const ynabTransactions = dkbTransactions.map((record) => {
-    // Credit card / EC transactions contain the actual date in the note (Verwendungszweck).
-    let actualTransactionDate = record.Buchungstag;
-    // So we try to parse it ...
-    const dateCandidate = new parseDate(
-      record.Verwendungszweck.substring(0, 10),
-      "yyyy-MM-dd",
+    let transactionDate = parseDate(
+      record.Wertstellung,
+      "dd.MM.yy",
       new Date()
     );
 
-    // .. and set it, if it worked.
-    if (isValid(dateCandidate)) {
-      actualTransactionDate = format(dateCandidate, "dd.MM.yyyy");
-    }
-
     return {
-      Date: actualTransactionDate,
-      Payee: record["Auftraggeber / Begünstigter"],
-      Memo: `${record["Verwendungszweck"]} / ${record["Auftraggeber / Begünstigter"]}`,
-      Amount: record["Betrag (EUR)"],
+      Date: formatDate(transactionDate, "yyyy-MM-dd"),
+      Payee: record["Zahlungsempfänger*in"],
+      Memo: `${record["Zahlungsempfänger*in"]} / ${record["Verwendungszweck"]}`,
+      Amount: record["Betrag (€)"],
     };
   });
 
