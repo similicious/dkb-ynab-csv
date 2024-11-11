@@ -33,7 +33,7 @@ function generateYnabCsv(fileContents) {
   // Parse csv, omitting the first 6 lines which are not CSV
   const dkbTransactions = parse(fileContents, {
     from_line: 5,
-    delimiter: ",",
+    delimiter: ";",
     columns: true,
     skip_empty_lines: true,
   });
